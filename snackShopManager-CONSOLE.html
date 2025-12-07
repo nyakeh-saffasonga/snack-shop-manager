@@ -136,7 +136,7 @@
         }
 
         function cheaper() {
-            let max = parseFloat(prompt("Enter max price?"));
+            let max = Number(prompt("Enter max price?"));
             console.log("Cheaper than $" + max);
             for (let i = 0; i < snacks.length; i++) {
                 if (s.price <= max) {
