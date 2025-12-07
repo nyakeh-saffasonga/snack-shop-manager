@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>Snack Shop</title>
+
+  <style>
+
+    body { 
+        font-family: Arial; margin: 20px; 
+    }
+
+    button { 
+        margin: 5px; padding: 10px; border-radius: 5px; 
+    }
+
+    ul { 
+        list-style: circle; 
+    }
+
+  </style>
+</head>
+
+<body>
+
+    <h2>Snack Shop</h2>
+
+    <button onclick="addSnackPrompt()">Add a Snack</button>
+    <button onclick="removeLastSnack()">Remove The Last Snack</button>
+    <button onclick="toggleSnackInStock()">Toggle a Snack's Status</button>
+    <button onclick="showNames()">Show The Snack Names List</button>
+    <button onclick="sortSnacks()">Sort by Name</button>
+    <button onclick="sortSnacksByPrice()">Sort by Price</button>
+    <button onclick="findSnackIndex()">Find a Snack</button>
+    <button onclick="showInStock()">Filter by Stock</button>
+    <button onclick="showCategory()">Filter by Category</button>
+    <button onclick="cheaper()">Filter by Price</button>
+
+    <ul id="list"> <!-- where the snacks list is displayed --> </ul>
+
+
+    <script>
+
+        const snacks = [
+        { name: "Chips", category: "Salty", price: 1.5, inStock: true },
+        { name: "Granola Bar", category: "Healthy", price: 1.0, inStock: true },
+        { name: "Soda", category: "Drink", price: 2.0, inStock: false },
+        { name: "Gummy Bears", category: "Sweet", price: 1.75, inStock: true }
+        ];
+
+        function showSnacks() {
+            document.getElementById("list").innerHTML = "";
+
+            for (let i = 0; i < snacks.length; i++) {
+                let s = snacks[i];
+                let stockStatus = s.inStock ? "In Stock" : "Out of Stock";
+                let listElement = document.getElementById("list");
+                listElement.innerHTML += "<li>" + s.name + " - $" + s.price + " - " + stockStatus + " </li>";
+            }
+        }
+
+        showSnacks();
+
+        function sortSnacks() {
+            snacks.sort((a,b) => a.name.localeCompare(b.name)); // localeCompare compares names alphabetically
+            console.log("Sorted by name", snacks);
+            showSnacks();
+        }
+
+        function sortSnacksByPrice() {
+            snacks.sort((a,b) => a.price - b.price);
+            console.log("Sorted by price", snacks);
+            showSnacks();
+        }
+
+        function showNames() {
+            let names = snacks.map(s => s.name);
+            alert(names.join(", "));
+            console.log("Names list:", names);
+        }
+
+        function addSnackPrompt() {
+            let theName = prompt("Name?");
+            let theCategory = prompt("Category?");
+            let thePrice = Number(prompt("Price?"));
+            let stockStatus = confirm("In stock?");
+            if ((theName != "") && (!isNaN(p))) /* if the name is not empty and price is a valid number */ {
+                snacks.push({ name: theName, category: theCategory, price: thePrice, inStock: stockStatus });
+                console.log("Added!");
+                showSnacks();
+            }
+        }
+
+        function removeLastSnack() {
+            snacks.pop();
+            console.log("Removed last snack");
+            showSnacks();
+        }
+
+        function toggleSnackInStock() {
+            let name = prompt("Snack to toggle?");
+            let index = snacks.findIndex(s => s.name.toLowerCase() === name.toLowerCase());
+            if (index !== -1) {
+                snacks[index].inStock = (!snacks[index].inStock); // flips the boolean value
+                console.log("Toggled inStock for", snacks[index]);
+                showSnacks();
+            } else {
+                alert("Not found");
+            }
+        }
+
+        function findSnackIndex() {
+            let name = prompt("Snack name to find index?");
+            let index = snacks.findIndex(s => s.name.toLowerCase() === name.toLowerCase());
+            console.log("Index of", name, "is", index);
+            alert("Index is " + index);
+        }
+
+        function showInStock() {
+            console.log("In stock:");
+            for (let i = 0; i < snacks.length; i++) {
+                if (s.inStock) {
+                console.log(s);
+                }
+            }
+        }
+
+        function showCategory() {
+            let category = prompt("Enter category to filter (e.g., Healthy):");
+            console.log("Category:", category);
+            for (let i = 0; i < snacks.length; i++) {
+                if (s.category.toLowerCase() === category.toLowerCase()) {
+                console.log(s);
+                }
+            }
+        }
+
+        function cheaper() {
+            let max = parseFloat(prompt("Enter max price?"));
+            console.log("Cheaper than $" + max);
+            for (let i = 0; i < snacks.length; i++) {
+                if (s.price <= max) {
+                console.log(s);
+                }
+            }
+        }
+
+    </script>
+
+</body>
+</html>
